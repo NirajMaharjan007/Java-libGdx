@@ -35,11 +35,6 @@ public abstract class Animator implements ApplicationListener {
 
     @Override
     public void create() {
-        if (spriteBatch == null || sheet == null || position == null)
-            Log.getInstance().setLog(System.err.toString() + "\nReturned Null\n"
-                    + spriteBatch + "\n" + sheet + "\n" + position);
-        else Log.getInstance().setLog("Created");
-
         TextureRegion[][] tmp = TextureRegion.split(sheet,
                 sheet.getWidth() / FRAME_COLS,
                 sheet.getHeight() / FRAME_ROWS);

@@ -17,7 +17,6 @@ public class Player extends Entity {
 
     private PlayerAnimation.PlayerRight player_right;
 
-
     private Player() {
         System.out.println("this is a player");
         position.set(45, 45);
@@ -28,7 +27,6 @@ public class Player extends Entity {
     public static Player getInstance() {
         return INSTANCE;
     }
-
 
     public void create() {
         System.out.println("Created Player");
@@ -43,28 +41,38 @@ public class Player extends Entity {
         if (Gdx.input.isKeyPressed(Input.Keys.UP) &&
                 !Gdx.input.isKeyPressed(Input.Keys.LEFT) &&
                 !Gdx.input.isKeyPressed(Input.Keys.RIGHT) &&
-                !Gdx.input.isKeyPressed(Input.Keys.DOWN))
+                !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             position.add(0, speed);
+            isIdle = false;
+        }
 
         else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) &&
                 !Gdx.input.isKeyPressed(Input.Keys.LEFT) &&
                 !Gdx.input.isKeyPressed(Input.Keys.RIGHT) &&
-                !Gdx.input.isKeyPressed(Input.Keys.UP))
+                !Gdx.input.isKeyPressed(Input.Keys.UP)) {
             position.add(0, -speed);
+            isIdle = false;
+        }
 
         else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) &&
                 !Gdx.input.isKeyPressed(Input.Keys.UP) &&
                 !Gdx.input.isKeyPressed(Input.Keys.RIGHT) &&
-                !Gdx.input.isKeyPressed(Input.Keys.DOWN))
+                !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            isIdle = false;
             position.add(-speed, 0);
+        }
 
         else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) &&
                 !Gdx.input.isKeyPressed(Input.Keys.LEFT) &&
                 !Gdx.input.isKeyPressed(Input.Keys.UP) &&
-                !Gdx.input.isKeyPressed(Input.Keys.DOWN))
+                !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            isIdle = false;
             position.add(speed, 0);
-    }
+        }
 
+        else
+            isIdle = true;
+    }
 
     private void boundary() {
         if (position.x > Gdx.graphics.getWidth() + texture.getWidth())
@@ -81,14 +89,14 @@ public class Player extends Entity {
     public void render(SpriteBatch batch) {
         this.boundary();
         position.add(4, 0);
-//        batch.draw(texture, position.x, position.y);
         player_right.render(batch);
     }
 
     @Override
     public void dispose() {
-        Log.getInstance().setLog("Player dispose");
+        player_right.dispose();
         texture.dispose();
+        Log.getInstance().setLog("Player dispose");
     }
 
 }

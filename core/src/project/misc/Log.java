@@ -12,10 +12,11 @@ public class Log {
     private Log() {
         try {
             debugOutputStream = new PrintStream(new FileOutputStream("./debug_log.log", true));
-            debugOutputStream.println("Date_Time:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                    .format(new Date()));
+            debugOutputStream.println("\nDate_Time: "
+                    + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                            .format(new Date()));
         } catch (Exception e) {
-            System.err.println("Log: " + e.getMessage() + "\n"
+            System.err.println("\nLog: " + e.getMessage() + "\n"
                     + e.getCause());
         }
     }
@@ -25,7 +26,7 @@ public class Log {
     }
 
     public void setLog(String log) {
-        debugOutputStream.println(log);
+        debugOutputStream.println("\nLogger:\n\t" + log);
     }
 
     public boolean check() {
