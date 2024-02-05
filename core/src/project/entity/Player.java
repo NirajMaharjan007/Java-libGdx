@@ -4,16 +4,19 @@
  */
 package project.entity;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import project.animation.player.PlayerAnimation;
 import project.misc.Log;
 
 public class Player extends Entity {
     private final static Player INSTANCE = new Player();
     boolean isUp, isDown, isRight, isLeft, isIdle;
     private Texture texture;
+
+    private PlayerAnimation.PlayerRight player_right;
+
 
     private Player() {
         System.out.println("this is a player");
@@ -30,6 +33,8 @@ public class Player extends Entity {
     public void create() {
         System.out.println("Created Player");
         texture = new Texture("player/player.png");
+        player_right = new PlayerAnimation.PlayerRight();
+        player_right.setPosition(position);
     }
 
     private void move() {
@@ -60,6 +65,7 @@ public class Player extends Entity {
             position.add(speed, 0);
     }
 
+
     private void boundary() {
         if (position.x > Gdx.graphics.getWidth() + texture.getWidth())
             position.x = -texture.getWidth();
@@ -74,8 +80,9 @@ public class Player extends Entity {
     @Override
     public void render(SpriteBatch batch) {
         this.boundary();
-        this.move();
-        batch.draw(texture, position.x, position.y);
+        position.add(4, 0);
+//        batch.draw(texture, position.x, position.y);
+        player_right.render(batch);
     }
 
     @Override
