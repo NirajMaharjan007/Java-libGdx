@@ -10,7 +10,25 @@ public class PlayerAnimation {
             FRAME_ROWS = 1;
             FRAME_COLS = 10;
             frameSpeed = 0.056f;
+            isFlipped = false;
             super.setTexture("player/player_right.png");
+            super.create();
+        }
+
+        public void render(SpriteBatch batch) {
+            super.setSpriteBatch(batch);
+            super.render();
+        }
+    }
+
+    public static class PlayerLeft extends Animator {
+        public PlayerLeft() {
+            super();
+            FRAME_ROWS = 1;
+            FRAME_COLS = 10;
+            frameSpeed = 0.056f;
+            isFlipped = true;
+            super.setTexture("player/player_left.png");
             super.create();
         }
 
@@ -26,7 +44,25 @@ public class PlayerAnimation {
             FRAME_ROWS = 1;
             FRAME_COLS = 10;
             frameSpeed = 0.064f;
+            isFlipped = false;
             super.setTexture("player/player_idle_right.png");
+            super.create();
+        }
+
+        public void render(SpriteBatch batch) {
+            super.setSpriteBatch(batch);
+            super.render();
+        }
+    }
+
+    public static class PlayerLeftIdle extends Animator {
+        public PlayerLeftIdle() {
+            super();
+            FRAME_ROWS = 1;
+            FRAME_COLS = 10;
+            frameSpeed = 0.064f;
+            isFlipped = true;
+            super.setTexture("player/player_idle_left.png");
             super.create();
         }
 

@@ -9,6 +9,8 @@ import project.misc.Log;
 public abstract class Animator implements ApplicationListener {
     protected static int FRAME_COLS = 0, FRAME_ROWS = 0;
     protected float stateTime = 0.0f, frameSpeed = 0.0f;
+    protected boolean isFlipped = false;
+
     Vector2 position;
     Animation<TextureRegion> animation; // Must declare frame type (TextureRegion)
     Texture sheet;
@@ -42,11 +44,21 @@ public abstract class Animator implements ApplicationListener {
         TextureRegion[] frame = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 
         int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                frame[index++] = tmp[i][j];
+
+        if (!isFlipped) {
+            for (int i = 0; i < FRAME_ROWS; i++) {
+                for (int j = 0; j < FRAME_COLS; j++) {
+                    frame[index++] = tmp[i][j];
+                }
+            }
+        } else {
+            for (int i = FRAME_ROWS - 1; i >= 0; i--) {
+                for (int j = FRAME_COLS - 1; j >= 0; j--) {
+                    frame[index++] = tmp[i][j];
+                }
             }
         }
+        System.out.println("Animator.create() + isFlipped->" + isFlipped);
 
         animation = new Animation<TextureRegion>(frameSpeed, frame);
 

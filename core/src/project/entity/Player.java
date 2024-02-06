@@ -10,15 +10,19 @@ import project.animation.player.PlayerAnimation;
 import project.misc.Log;
 
 public class Player extends Entity {
+    public final static int WIDTH = 20, HEIGHT = 36;
     private final static Player INSTANCE = new Player();
+
     boolean isUp, isDown, isRight, isLeft, isIdle;
 
     private PlayerAnimation.PlayerRight player_right;
+    private PlayerAnimation.PlayerLeft player_left;
     private PlayerAnimation.PlayerRightIdle player_right_idle;
+    private PlayerAnimation.PlayerLeftIdle player_left_idle;
 
     private Player() {
         System.out.println("this is a player");
-        position.set(45, 45);
+        position.set(50, 50);
         isUp = isDown = isRight = isLeft = false;
         isIdle = true;
     }
@@ -29,11 +33,18 @@ public class Player extends Entity {
 
     public void create() {
         System.out.println("Created Player");
+
         player_right = new PlayerAnimation.PlayerRight();
         player_right.setPosition(position);
 
+        player_left = new PlayerAnimation.PlayerLeft();
+        player_left.setPosition(position);
+
         player_right_idle = new PlayerAnimation.PlayerRightIdle();
         player_right_idle.setPosition(position);
+
+        player_left_idle = new PlayerAnimation.PlayerLeftIdle();
+        player_left_idle.setPosition(position);
     }
 
     private void move() {
@@ -54,19 +65,19 @@ public class Player extends Entity {
             position.add(speed, 0);
         } else {
             isIdle = true;
-            isRight = isLeft = false;
+            // isRight = isLeft = false;
         }
     }
 
     private void boundary() {
-        if (position.x > Gdx.graphics.getWidth())
-            position.x = 0;
-        if (position.x < 0)
-            position.x = Gdx.graphics.getWidth();
-        if (position.y > Gdx.graphics.getHeight())
-            position.y = 0;
-        if (position.y < 0)
-            position.y = Gdx.graphics.getHeight();
+        if (position.x > Gdx.graphics.getWidth() - WIDTH)
+            position.x = -WIDTH;
+        if (position.x < -WIDTH)
+            position.x = Gdx.graphics.getWidth() - WIDTH;
+        if (position.y > Gdx.graphics.getHeight() - HEIGHT)
+            position.y = -HEIGHT;
+        if (position.y < -HEIGHT)
+            position.y = Gdx.graphics.getHeight() - HEIGHT;
     }
 
     @Override
@@ -74,11 +85,17 @@ public class Player extends Entity {
         this.boundary();
         this.move();
         // player_right.render(batch);
-        if (isIdle)
-            player_right_idle.render(batch);
-        else {
+        if (isIdle) {
+            if (isRight) {
+                player_right_idle.render(batch);
+            } else if (isLeft) {
+                player_left_idle.render(batch);
+            }
+        } else {
             if (!isLeft && isRight) {
                 player_right.render(batch);
+            } else if (!isRight && isLeft) {
+                player_left.render(batch);
             }
         }
 
