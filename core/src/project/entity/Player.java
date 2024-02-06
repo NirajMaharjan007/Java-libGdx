@@ -14,6 +14,7 @@ public class Player extends Entity {
     boolean isUp, isDown, isRight, isLeft, isIdle;
 
     private PlayerAnimation.PlayerRight player_right;
+    private PlayerAnimation.PlayerRightIdle player_right_idle;
 
     private Player() {
         System.out.println("this is a player");
@@ -30,6 +31,9 @@ public class Player extends Entity {
         System.out.println("Created Player");
         player_right = new PlayerAnimation.PlayerRight();
         player_right.setPosition(position);
+
+        player_right_idle = new PlayerAnimation.PlayerRightIdle();
+        player_right_idle.setPosition(position);
     }
 
     private void move() {
@@ -41,11 +45,16 @@ public class Player extends Entity {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
             position.add(0, -speed);
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            isLeft = true;
+            isRight = false;
             position.add(-speed, 0);
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            isLeft = false;
+            isRight = true;
             position.add(speed, 0);
         } else {
             isIdle = true;
+            isRight = isLeft = false;
         }
     }
 
@@ -63,8 +72,16 @@ public class Player extends Entity {
     @Override
     public void render(SpriteBatch batch) {
         this.boundary();
-        position.add(4, 0);
-        player_right.render(batch);
+        this.move();
+        // player_right.render(batch);
+        if (isIdle)
+            player_right_idle.render(batch);
+        else {
+            if (!isLeft && isRight) {
+                player_right.render(batch);
+            }
+        }
+
     }
 
     @Override

@@ -8,9 +8,9 @@ public class PlayerAnimation {
         public PlayerRight() {
             super();
             FRAME_ROWS = 1;
-            FRAME_COLS = 5;
-            frameSpeed = 0.16f;
-            super.setTexture("player/player_right2.png");
+            FRAME_COLS = 10;
+            frameSpeed = 0.056f;
+            super.setTexture("player/player_right.png");
             super.create();
         }
 
@@ -24,9 +24,9 @@ public class PlayerAnimation {
         public PlayerRightIdle() {
             super();
             FRAME_ROWS = 1;
-            FRAME_COLS = 2;
-            frameSpeed = 0.2f;
-            super.setTexture("player/player_right.png");
+            FRAME_COLS = 10;
+            frameSpeed = 0.064f;
+            super.setTexture("player/player_idle_right.png");
             super.create();
         }
 
