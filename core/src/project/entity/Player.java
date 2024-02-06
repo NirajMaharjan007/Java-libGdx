@@ -23,7 +23,8 @@ public class Player extends Entity {
     private Player() {
         System.out.println("this is a player");
         position.set(50, 50);
-        isUp = isDown = isRight = isLeft = false;
+        isUp = isDown = isLeft = false;
+        isRight = true;
         isIdle = true;
     }
 
