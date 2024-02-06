@@ -8,8 +8,24 @@ public class PlayerAnimation {
         public PlayerRight() {
             super();
             FRAME_ROWS = 1;
-            FRAME_COLS = 3;
-            frameSpeed = 0.10f;
+            FRAME_COLS = 5;
+            frameSpeed = 0.16f;
+            super.setTexture("player/player_right2.png");
+            super.create();
+        }
+
+        public void render(SpriteBatch batch) {
+            super.setSpriteBatch(batch);
+            super.render();
+        }
+    }
+
+    public static class PlayerRightIdle extends Animator {
+        public PlayerRightIdle() {
+            super();
+            FRAME_ROWS = 1;
+            FRAME_COLS = 2;
+            frameSpeed = 0.2f;
             super.setTexture("player/player_right.png");
             super.create();
         }
