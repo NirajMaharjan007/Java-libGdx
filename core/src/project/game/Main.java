@@ -4,17 +4,28 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import project.entity.Player;
+
+import project.entity.*;
+import project.misc.CollisionDetection;
 import project.misc.Log;
 
 public class Main extends ApplicationAdapter {
     Player player = Player.getInstance();
+    Enemy enemy;
+
+    private CollisionDetection collide;
     private SpriteBatch batch;
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
         player.create();
+
+        batch = new SpriteBatch();
+
+        enemy = new Enemy();
+        enemy.create();
+
+        collide = new CollisionDetection();
     }
 
     @Override
@@ -27,7 +38,9 @@ public class Main extends ApplicationAdapter {
 
         batch.begin();
         batch.enableBlending();
+        enemy.render(batch);
         player.render(batch);
+        collide.createCollision(player, enemy);
         batch.end();
     }
 

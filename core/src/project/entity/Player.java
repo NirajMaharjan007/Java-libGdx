@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package project.entity;
 
 import com.badlogic.gdx.*;
@@ -10,7 +6,7 @@ import project.animation.player.PlayerAnimation;
 import project.misc.Log;
 
 public class Player extends Entity {
-    public final static int WIDTH = 20, HEIGHT = 36;
+    public final static int WIDTH = 24, HEIGHT = 32;
     private final static Player INSTANCE = new Player();
 
     boolean isUp, isDown, isRight, isLeft, isIdle;
@@ -21,8 +17,11 @@ public class Player extends Entity {
     private PlayerAnimation.PlayerLeftIdle player_left_idle;
 
     private Player() {
+        super();
+        super.setSize(WIDTH, HEIGHT);
+
         System.out.println("this is a player");
-        position.set(50, 50);
+        position.set(512, 50);
         isUp = isDown = isLeft = false;
         isRight = true;
         isIdle = true;
@@ -83,6 +82,7 @@ public class Player extends Entity {
 
     @Override
     public void render(SpriteBatch batch) {
+        // super.setGravity();
         this.boundary();
         this.move();
         // player_right.render(batch);
@@ -105,6 +105,9 @@ public class Player extends Entity {
     @Override
     public void dispose() {
         player_right.dispose();
+        player_left.dispose();
+        player_right_idle.dispose();
+        player_left_idle.dispose();
         Log.getInstance().setLog("Player dispose");
     }
 
