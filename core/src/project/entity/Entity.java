@@ -22,6 +22,18 @@ public abstract class Entity implements Cloneable {
         }
     }
 
+    public void addPosition(float x, float y) {
+        this.position.add(x, y);
+    }
+
+    public void setX(float x) {
+        position.set(x, getY());
+    }
+
+    public void setY(float y) {
+        position.set(getX(), y);
+    }
+
     public float getX() {
         return position.x;
     }

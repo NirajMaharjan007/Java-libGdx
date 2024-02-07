@@ -38,9 +38,10 @@ public class Main extends ApplicationAdapter {
 
         batch.begin();
         batch.enableBlending();
+        collide.createCollision(player, enemy);
+        // collide.collide();
         enemy.render(batch);
         player.render(batch);
-        collide.createCollision(player, enemy);
         batch.end();
     }
 

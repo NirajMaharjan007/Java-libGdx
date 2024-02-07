@@ -51,9 +51,9 @@ public class Player extends Entity {
         int speed = 4;
         isIdle = false;
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             position.add(0, speed);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             position.add(0, -speed);
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             isLeft = true;

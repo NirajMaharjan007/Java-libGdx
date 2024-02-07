@@ -1,8 +1,8 @@
 package project.entity;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import project.animation.enemy.EnemyAnimation.*;
 import project.misc.Log;
 
 public class Enemy extends Entity {
@@ -11,27 +11,28 @@ public class Enemy extends Entity {
         Zombie
     }
 
-    private Texture texture;
+    private EnemyIdleRight enemyIdleRight;
 
     public Enemy() {
         super();
-        super.setSize(18, 24);
+        super.setSize(32, 32);
 
         position.set(512, 50);
     }
 
     public void create() {
-        texture = new Texture("enemy/box.png");
+        enemyIdleRight = new EnemyIdleRight();
+        enemyIdleRight.setPosition(position);
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, getX(), getY());
+        enemyIdleRight.render(batch);
     }
 
     @Override
     public void dispose() {
         Log.getInstance().setLog("Enemy: Disposed");
-        texture.dispose();
+        enemyIdleRight.dispose();
     }
 }
