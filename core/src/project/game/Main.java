@@ -24,6 +24,7 @@ public class Main extends ApplicationAdapter {
 
         enemy = new Enemy();
         enemy.create();
+        enemy.setSize(64, 32);
 
         collide = new CollisionDetection();
     }
@@ -31,15 +32,15 @@ public class Main extends ApplicationAdapter {
     @Override
     public void render() {
         ScreenUtils.clear(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT
-                | (Gdx.graphics.getBufferFormat().coverageSampling
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
+                (Gdx.graphics.getBufferFormat().coverageSampling
                         ? GL20.GL_COVERAGE_BUFFER_BIT_NV
                         : 0));
 
+        collide.createCollision(player, enemy);
+
         batch.begin();
         batch.enableBlending();
-        collide.createCollision(player, enemy);
-        // collide.collide();
         enemy.render(batch);
         player.render(batch);
         batch.end();
@@ -50,6 +51,6 @@ public class Main extends ApplicationAdapter {
         Log.getInstance().setLog("Main Dispose");
         batch.dispose();
         player.dispose();
-
+        enemy.dispose();
     }
 }

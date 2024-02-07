@@ -2,7 +2,7 @@ package project.entity;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import project.animation.player.PlayerAnimation;
+import project.animation.player.PlayerAnimation.*;
 import project.misc.Log;
 
 public class Player extends Entity {
@@ -11,17 +11,17 @@ public class Player extends Entity {
 
     boolean isUp, isDown, isRight, isLeft, isIdle;
 
-    private PlayerAnimation.PlayerRight player_right;
-    private PlayerAnimation.PlayerLeft player_left;
-    private PlayerAnimation.PlayerRightIdle player_right_idle;
-    private PlayerAnimation.PlayerLeftIdle player_left_idle;
+    private PlayerRight player_right;
+    private PlayerLeft player_left;
+    private PlayerRightIdle player_right_idle;
+    private PlayerLeftIdle player_left_idle;
 
     private Player() {
         super();
         super.setSize(WIDTH, HEIGHT);
 
         System.out.println("this is a player");
-        position.set(512, 50);
+        position.set(256, 50);
         isUp = isDown = isLeft = false;
         isRight = true;
         isIdle = true;
@@ -34,16 +34,16 @@ public class Player extends Entity {
     public void create() {
         System.out.println("Created Player");
 
-        player_right = new PlayerAnimation.PlayerRight();
+        player_right = new PlayerRight();
         player_right.setPosition(position);
 
-        player_left = new PlayerAnimation.PlayerLeft();
+        player_left = new PlayerLeft();
         player_left.setPosition(position);
 
-        player_right_idle = new PlayerAnimation.PlayerRightIdle();
+        player_right_idle = new PlayerRightIdle();
         player_right_idle.setPosition(position);
 
-        player_left_idle = new PlayerAnimation.PlayerLeftIdle();
+        player_left_idle = new PlayerLeftIdle();
         player_left_idle.setPosition(position);
     }
 
@@ -52,8 +52,12 @@ public class Player extends Entity {
         isIdle = false;
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            isDown = false;
+            isUp = true;
             position.add(0, speed);
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            isUp = false;
+            isDown = true;
             position.add(0, -speed);
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             isLeft = true;

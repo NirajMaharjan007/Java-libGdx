@@ -15,7 +15,7 @@ public class Enemy extends Entity {
 
     public Enemy() {
         super();
-        super.setSize(32, 32);
+        super.setSize(24, 32);
 
         position.set(512, 50);
     }
