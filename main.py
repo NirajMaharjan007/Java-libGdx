@@ -1,34 +1,44 @@
 import pygame as pg
-from sys import exit
+from misc.entity import *
+from misc.collision import Collision
 
-
+WIDTH, HEIGHT = 800, 600
+screen = pg.display.set_mode((WIDTH, HEIGHT), vsync=1)
 pg.init()
-screen_width = 800
-screen_height = 600
-screen = pg.display.set_mode((screen_width, screen_height))
-pg.display.set_caption("My Pygame Screen")
+pg.display.set_caption("Python Game")
+
+player = Player(screen)
+box = Box(screen)
+colision = Collision(box, player)
 
 
-def render():
-    running = True
+def set():
+    clock = pg.time.Clock()
+    clock.tick(60)
+    screen.fill((255, 255, 255))
 
-    while running:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                running = False
+    colision.collide()
 
-        # Fill the screen with a color (in this case, white)
-        screen.fill((255, 255, 255))
+    box.render()
+    player.render()
 
-        # Update the display
-        pg.display.flip()
+    pg.display.flip()
+    pg.display.update()
 
 
 def main():
-    render()
+    run = True
+
+    while run:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                print("quit")
+                run = False
+
+        set()
+
     pg.quit()
-    exit()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
