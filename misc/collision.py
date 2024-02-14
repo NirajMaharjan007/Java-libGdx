@@ -1,4 +1,5 @@
 import pygame as pg
+
 from misc.entity import Box, Player
 
 
@@ -15,4 +16,5 @@ class Collision:
                               self.player.SIZE, self.player.SIZE)
 
         if player_rect.colliderect(box_rect):
-            pass
+            print("Oh no!..\tIt collide")
+            

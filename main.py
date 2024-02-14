@@ -1,6 +1,7 @@
 import pygame as pg
-from misc.entity import *
+
 from misc.collision import Collision
+from misc.entity import *
 
 WIDTH, HEIGHT = 800, 600
 screen = pg.display.set_mode((WIDTH, HEIGHT), vsync=1)
@@ -9,7 +10,7 @@ pg.display.set_caption("Python Game")
 
 player = Player(screen)
 box = Box(screen)
-colision = Collision(box, player)
+collision = Collision(box, player)
 
 
 def set():
@@ -17,7 +18,7 @@ def set():
     clock.tick(60)
     screen.fill((255, 255, 255))
 
-    colision.collide()
+    collision.collide()
 
     box.render()
     player.render()
@@ -36,7 +37,7 @@ def main():
                 run = False
 
         set()
-
+        
     pg.quit()
 
 

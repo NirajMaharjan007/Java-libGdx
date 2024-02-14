@@ -1,6 +1,5 @@
-import pygame as pg
-
 import numpy as np
+import pygame as pg
 
 
 class Player:
@@ -59,7 +58,7 @@ class Player:
             self.SPEED = 12
 
         else:
-            self.SPEED = 4
+            self.SPEED = 8
 
 
 class Box:
