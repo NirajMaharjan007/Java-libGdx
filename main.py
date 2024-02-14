@@ -18,7 +18,8 @@ def set():
     clock.tick(60)
     screen.fill((255, 255, 255))
 
-    collision.collide()
+    if collision.collide():
+        collision.player_touch()
 
     box.render()
     player.render()

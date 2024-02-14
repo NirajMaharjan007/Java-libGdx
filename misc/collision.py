@@ -15,6 +15,12 @@ class Collision:
         player_rect = pg.Rect(self.player.x, self.player.y,
                               self.player.SIZE, self.player.SIZE)
 
-        if player_rect.colliderect(box_rect):
-            print("Oh no!..\tIt collide")
+        return player_rect.colliderect(box_rect)
+
+            
+    def player_touch(self):
+        self.box.dir_x = -self.box.dir_x
+        self.box.dir_y = -self.box.dir_y
+        
+    
             
