@@ -1,26 +1,47 @@
+from abc import ABC, abstractmethod
+
 import numpy as np
 import pygame as pg
 
 
-class Player:
-    x = 16
-    y = 16
+class Entity(ABC):
+    x = 32
+    y = 32
+    dir_x = 4
+    dir_y = 8
 
+    gravity = True
+
+    def _gravity(self):
+        if self.gravity:
+            # self.x += self.dir_x
+            self.y += self.dir_y
+
+    @abstractmethod
+    def __init__(self, screen: pg.Surface):
+        self.screen = screen
+
+    @abstractmethod
+    def render(self):
+        pass
+
+
+class Player(Entity):
     SIZE = 32
-    SPEED = 4
 
     color = (0, 255, 200)
 
     def __init__(self, screen: pg.Surface):
+        super().__init__(screen)
         self.screen = screen
 
     def render(self):
+        self._gravity()
         self.__move()
         self.__collision()
 
         pg.draw.rect(
-            self.screen, self.color,
-            pg.Rect(self.x, self.y, self.SIZE, self.SIZE)
+            self.screen, self.color, pg.Rect(self.x, self.y, self.SIZE, self.SIZE)
         )
 
     def __collision(self):
@@ -42,23 +63,12 @@ class Player:
     def __move(self):
         key = pg.key.get_pressed()
 
-        if key[pg.K_DOWN]:
-            self.y += self.SPEED
-
         if key[pg.K_UP]:
-            self.y -= self.SPEED
-
-        if key[pg.K_LEFT]:
-            self.x -= self.SPEED
-
-        if key[pg.K_RIGHT]:
-            self.x += self.SPEED
-
-        if key[pg.K_SPACE]:
-            self.SPEED = 12
+            self.gravity = False
+            self.y -= self.dir_y * 2
 
         else:
-            self.SPEED = 8
+            self.gravity = True
 
 
 class Box:
@@ -74,8 +84,7 @@ class Box:
         # self.__collision()
         self.__move()
         pg.draw.rect(
-            self.screen, self.color,
-            pg.Rect(self.x, self.y, self.SIZE, self.SIZE)
+            self.screen, self.color, pg.Rect(self.x, self.y, self.SIZE, self.SIZE)
         )
 
     def __move(self):
@@ -86,7 +95,7 @@ class Box:
         self.y += self.dir_y
 
         if self.x >= width - self.SIZE or self.x <= 0:
-            self.dir_x = - self.dir_x
+            self.dir_x = -self.dir_x
 
         if self.y >= height - self.SIZE or self.y <= 0:
             self.dir_y = -self.dir_y
