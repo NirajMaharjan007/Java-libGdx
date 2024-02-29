@@ -62,13 +62,22 @@ class Player(Entity):
 
     def __move(self):
         key = pg.key.get_pressed()
+        self.gravity = True
 
         if key[pg.K_UP]:
-            self.gravity = False
             self.y -= self.dir_y * 2
 
-        else:
-            self.gravity = True
+        # if key[pg.K_DOWN]:
+        #     self.y += self.dir_y * 2
+
+        if key[pg.K_LEFT]:
+            self.x -= self.dir_x * 2
+
+        if key[pg.K_RIGHT]:
+            self.x += self.dir_x * 2
+
+        # else:
+        #     self.gravity = False
 
 
 class Box:
