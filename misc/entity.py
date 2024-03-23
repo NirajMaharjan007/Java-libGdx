@@ -26,6 +26,13 @@ class Entity(ABC):
         pass
 
 
+class Piller(Entity):
+    def __init__(self, screen:pg.Surface):
+        pass
+
+    def render(self):
+        super().render()
+
 class Player(Entity):
     SIZE = 32
 

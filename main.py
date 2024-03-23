@@ -21,7 +21,7 @@ def set():
     if collision.collide():
         collision.player_touch()
 
-    box.render()
+    # box.render()
     player.render()
 
     pg.display.flip()
@@ -38,7 +38,7 @@ def main():
                 run = False
 
         set()
-        
+
     pg.quit()
 
 
