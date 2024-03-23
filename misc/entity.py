@@ -15,7 +15,7 @@ class Entity(ABC):
     def _gravity(self):
         if self.gravity:
             # self.x += self.dir_x
-            self.y += self.dir_y
+            self.y += self.dir_y * 1.2
 
     @abstractmethod
     def __init__(self, screen: pg.Surface):
@@ -27,11 +27,12 @@ class Entity(ABC):
 
 
 class Piller(Entity):
-    def __init__(self, screen:pg.Surface):
+    def __init__(self, screen: pg.Surface):
         pass
 
     def render(self):
         super().render()
+
 
 class Player(Entity):
     SIZE = 32
@@ -55,8 +56,8 @@ class Player(Entity):
         width = self.screen.get_width()
         height = self.screen.get_height()
 
-        if self.x >= width - self.SIZE:
-            self.x = width - self.SIZE
+        if self.x >= width:
+            self.x = -self.SIZE - width
 
         if self.x <= 0:
             self.x = 0
@@ -71,20 +72,16 @@ class Player(Entity):
         key = pg.key.get_pressed()
         self.gravity = True
 
+        self.x += self.dir_x
+
         if key[pg.K_UP]:
-            self.y -= self.dir_y * 2
-
-        # if key[pg.K_DOWN]:
-        #     self.y += self.dir_y * 2
-
-        if key[pg.K_LEFT]:
-            self.x -= self.dir_x * 2
+            self.gravity = False
+            self.y -= self.dir_y * 3.2
 
         if key[pg.K_RIGHT]:
             self.x += self.dir_x * 2
 
-        # else:
-        #     self.gravity = False
+        # print(self.gravity)
 
 
 class Box:
