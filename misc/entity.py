@@ -8,7 +8,8 @@ class Entity(ABC):
     y = 32
     dir_x = 4
     dir_y = 8
-    SIZE = 16
+    width = 16
+    height = 16
 
     gravity = True
 
@@ -32,24 +33,26 @@ class Piller(Entity):
     def __init__(self, screen: pg.Surface):
         super(Piller, self).__init__(screen)
         self.screen = screen
-        self.x = self.y = 0
+        self.height = 50
+        self.width = self.screen.get_width()
+        self.x = 0
+        self.y = self.screen.get_height() - self.height
 
     def render(self):
-        width = self.screen.get_width()
-        self.y = self.screen.get_height() - 46
-
         super().render()
-        pg.draw.rect(self.screen, self.color, pg.Rect(self.x, self.y, width, 46))
+        pg.draw.rect(
+            self.screen, self.color, pg.Rect(self.x, self.y, self.width, self.height)
+        )
 
 
 class Player(Entity):
-    SIZE = 32
-
     color = (0, 255, 200)
 
     def __init__(self, screen: pg.Surface):
         super().__init__(screen)
         self.screen = screen
+
+        self.width = self.height = 32
 
     def render(self):
         self._gravity()
@@ -57,7 +60,7 @@ class Player(Entity):
         self.__collision()
 
         pg.draw.rect(
-            self.screen, self.color, pg.Rect(self.x, self.y, self.SIZE, self.SIZE)
+            self.screen, self.color, pg.Rect(self.x, self.y, self.width, self.height)
         )
 
     def __collision(self):
@@ -65,13 +68,13 @@ class Player(Entity):
         height = self.screen.get_height()
 
         if self.x >= width:
-            self.x = -self.SIZE - width
+            self.x = -self.width - width
 
         if self.x <= 0:
             self.x = 0
 
-        if self.y >= height - self.SIZE:
-            self.y = height - self.SIZE
+        if self.y >= height - self.height:
+            self.y = height - self.height
 
         if self.y <= 0:
             self.y = 0
