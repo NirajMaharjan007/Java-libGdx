@@ -16,7 +16,7 @@ class Entity(ABC):
     def _gravity(self):
         if self.gravity:
             # self.x += self.dir_x
-            self.y += self.dir_y * 1.2
+            self.y += self.dir_y * 1.6
 
     @abstractmethod
     def __init__(self, screen: pg.Surface):
@@ -27,11 +27,11 @@ class Entity(ABC):
         pass
 
 
-class Piller(Entity):
+class Pillar(Entity):
     color = (128, 100, 100)
 
     def __init__(self, screen: pg.Surface):
-        super(Piller, self).__init__(screen)
+        super(Pillar, self).__init__(screen)
         self.screen = screen
         self.height = 50
         self.width = self.screen.get_width()
@@ -41,7 +41,8 @@ class Piller(Entity):
     def render(self):
         super().render()
         pg.draw.rect(
-            self.screen, self.color, pg.Rect(self.x, self.y, self.width, self.height)
+            self.screen, self.color,
+            pg.Rect(self.x, self.y, self.width, self.height)
         )
 
 
@@ -51,8 +52,10 @@ class Player(Entity):
     def __init__(self, screen: pg.Surface):
         super().__init__(screen)
         self.screen = screen
-
         self.width = self.height = 32
+
+        self.jump = False
+        self. count = 0.00
 
     def render(self):
         self._gravity()
@@ -60,7 +63,8 @@ class Player(Entity):
         self.__collision()
 
         pg.draw.rect(
-            self.screen, self.color, pg.Rect(self.x, self.y, self.width, self.height)
+            self.screen, self.color,
+            pg.Rect(self.x, self.y, self.width, self.height)
         )
 
     def __collision(self):
@@ -81,18 +85,26 @@ class Player(Entity):
 
     def __move(self):
         key = pg.key.get_pressed()
+        # key_just_pressed = pg.key.set_repeat()
         self.gravity = True
 
         self.x += self.dir_x
 
-        if key[pg.K_UP]:
+        if key[pg.K_UP] and not self.jump:
             self.gravity = False
-            self.y -= self.dir_y * 3.2
+            self.jump = True
 
         if key[pg.K_RIGHT]:
             self.x += self.dir_x * 2
 
-        # print(self.gravity)
+        print(self.count, self.jump)
+        if self.jump:
+            self.count += 0.25
+            self.y -= self.dir_y * 3.2
+
+            if self.count > 2.45:
+                self.count = 0.00
+                self.jump = False
 
 
 class Box:
@@ -108,7 +120,8 @@ class Box:
         # self.__collision()
         self.__move()
         pg.draw.rect(
-            self.screen, self.color, pg.Rect(self.x, self.y, self.SIZE, self.SIZE)
+            self.screen, self.color, pg.Rect(
+                self.x, self.y, self.SIZE, self.SIZE)
         )
 
     def __move(self):

@@ -9,7 +9,8 @@ class Collision:
         self.player = player
 
     def collide(self) -> bool:
-        box_rect = pg.Rect(self.box.x, self.box.y, self.box.width, self.box.height)
+        box_rect = pg.Rect(self.box.x, self.box.y,
+                           self.box.width, self.box.height)
 
         player_rect = pg.Rect(
             self.player.x, self.player.y, self.player.width, self.player.height
