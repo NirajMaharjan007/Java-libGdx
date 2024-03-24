@@ -9,8 +9,8 @@ pg.init()
 pg.display.set_caption("Python Game")
 
 player = Player(screen)
-box = Box(screen)
-collision = Collision(box, player)
+piller = Piller(screen)
+collision = Collision(piller, player)
 
 
 def set():
@@ -21,7 +21,7 @@ def set():
     if collision.collide():
         collision.player_touch()
 
-    # box.render()
+    piller.render()
     player.render()
 
     pg.display.flip()

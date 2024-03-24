@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-import numpy as np
 import pygame as pg
 
 
@@ -9,6 +8,7 @@ class Entity(ABC):
     y = 32
     dir_x = 4
     dir_y = 8
+    SIZE = 16
 
     gravity = True
 
@@ -27,11 +27,19 @@ class Entity(ABC):
 
 
 class Piller(Entity):
+    color = (128, 100, 100)
+
     def __init__(self, screen: pg.Surface):
-        pass
+        super(Piller, self).__init__(screen)
+        self.screen = screen
+        self.x = self.y = 0
 
     def render(self):
+        width = self.screen.get_width()
+        self.y = self.screen.get_height() - 46
+
         super().render()
+        pg.draw.rect(self.screen, self.color, pg.Rect(self.x, self.y, width, 46))
 
 
 class Player(Entity):
