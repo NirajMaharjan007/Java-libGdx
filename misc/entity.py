@@ -80,7 +80,7 @@ class Player(Entity):
         #     self.gravity = False
 
 
-class Box:
+class Box(Entity):
     x = y = 8
     SIZE = 32
     dir_x, dir_y = 6, 6
