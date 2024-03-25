@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-import numpy as np
 import pygame as pg
 
 
@@ -9,13 +8,15 @@ class Entity(ABC):
     y = 32
     dir_x = 4
     dir_y = 8
+    width = 16
+    height = 16
 
     gravity = True
 
     def _gravity(self):
         if self.gravity:
             # self.x += self.dir_x
-            self.y += self.dir_y
+            self.y += self.dir_y * 1.6
 
     @abstractmethod
     def __init__(self, screen: pg.Surface):
@@ -26,14 +27,35 @@ class Entity(ABC):
         pass
 
 
-class Player(Entity):
-    SIZE = 32
+class Pillar(Entity):
+    color = (128, 100, 100)
 
+    def __init__(self, screen: pg.Surface):
+        super(Pillar, self).__init__(screen)
+        self.screen = screen
+        self.height = 50
+        self.width = self.screen.get_width()
+        self.x = 0
+        self.y = self.screen.get_height() - self.height
+
+    def render(self):
+        super().render()
+        pg.draw.rect(
+            self.screen, self.color,
+            pg.Rect(self.x, self.y, self.width, self.height)
+        )
+
+
+class Player(Entity):
     color = (0, 255, 200)
 
     def __init__(self, screen: pg.Surface):
         super().__init__(screen)
         self.screen = screen
+        self.width = self.height = 32
+
+        self.jump = False
+        self. count = 0.00
 
     def render(self):
         self._gravity()
@@ -41,43 +63,48 @@ class Player(Entity):
         self.__collision()
 
         pg.draw.rect(
-            self.screen, self.color, pg.Rect(self.x, self.y, self.SIZE, self.SIZE)
+            self.screen, self.color,
+            pg.Rect(self.x, self.y, self.width, self.height)
         )
 
     def __collision(self):
         width = self.screen.get_width()
         height = self.screen.get_height()
 
-        if self.x >= width - self.SIZE:
-            self.x = width - self.SIZE
+        if self.x >= width:
+            self.x = -self.width - width
 
         if self.x <= 0:
             self.x = 0
 
-        if self.y >= height - self.SIZE:
-            self.y = height - self.SIZE
+        if self.y >= height - self.height:
+            self.y = height - self.height
 
         if self.y <= 0:
             self.y = 0
 
     def __move(self):
         key = pg.key.get_pressed()
+        # key_just_pressed = pg.key.set_repeat()
         self.gravity = True
 
-        if key[pg.K_UP]:
-            self.y -= self.dir_y * 2
+        self.x += self.dir_x
 
-        # if key[pg.K_DOWN]:
-        #     self.y += self.dir_y * 2
-
-        if key[pg.K_LEFT]:
-            self.x -= self.dir_x * 2
+        if key[pg.K_UP] and not self.jump:
+            self.gravity = False
+            self.jump = True
 
         if key[pg.K_RIGHT]:
             self.x += self.dir_x * 2
 
-        # else:
-        #     self.gravity = False
+        print(self.count, self.jump)
+        if self.jump:
+            self.count += 0.25
+            self.y -= self.dir_y * 3.2
+
+            if self.count > 2.45:
+                self.count = 0.00
+                self.jump = False
 
 
 class Box(Entity):
@@ -93,7 +120,8 @@ class Box(Entity):
         # self.__collision()
         self.__move()
         pg.draw.rect(
-            self.screen, self.color, pg.Rect(self.x, self.y, self.SIZE, self.SIZE)
+            self.screen, self.color, pg.Rect(
+                self.x, self.y, self.SIZE, self.SIZE)
         )
 
     def __move(self):
