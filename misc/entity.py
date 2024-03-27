@@ -54,7 +54,7 @@ class Player(Entity):
         self.width = self.height = 32
 
         self.jump = False
-        self.count = 0.25
+        self.count = 0.00
 
     def render(self):
         self._gravity()
@@ -86,14 +86,15 @@ class Player(Entity):
         # key_just_pressed = pg.key.set_repeat()
         self.gravity = True
 
-        self.x += self.dir_x
-
         if key[pg.K_UP] and not self.jump:
             self.gravity = False
             self.jump = True
 
         if key[pg.K_RIGHT]:
             self.x += self.dir_x * 2
+
+        if key[pg.K_LEFT]:
+            self.x -= self.dir_x * 2
 
         print(self.count, self.jump)
         if self.jump:
