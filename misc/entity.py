@@ -83,12 +83,13 @@ class Player(Entity):
 
     def __move(self):
         key = pg.key.get_pressed()
-        # key_just_pressed = pg.key.set_repeat()
         self.gravity = True
 
-        if key[pg.K_UP] and not self.jump:
-            self.gravity = False
-            self.jump = True
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_UP and not self.jump:
+                    self.jump = True
+                    self.gravity = False
 
         if key[pg.K_RIGHT]:
             self.x += self.dir_x * 2
@@ -96,12 +97,16 @@ class Player(Entity):
         if key[pg.K_LEFT]:
             self.x -= self.dir_x * 2
 
+        """ if key[pg.K_UP] and not self.jump:
+            self.gravity = False
+            self.jump = True """
+
         print(self.count, self.jump)
         if self.jump:
-            self.count += 0.25
-            self.y -= self.dir_y * 3.2
+            self.count += 0.50
+            self.y -= self.dir_y * 4.20
 
-            if self.count > 2.45:
+            if self.count > 3.2:
                 self.count = 0.00
                 self.jump = False
 
