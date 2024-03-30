@@ -1,3 +1,4 @@
+import sys
 from abc import ABC, abstractmethod
 
 import pygame as pg
@@ -70,10 +71,10 @@ class Player(Entity):
         height = self.screen.get_height()
 
         if self.x >= width:
-            self.x = -self.width - width
-
-        if self.x <= 0:
             self.x = 0
+
+        if self.x <= -self.width:
+            self.x = width - self.width
 
         if self.y >= height - self.height:
             self.y = height - self.height
@@ -90,6 +91,9 @@ class Player(Entity):
                 if event.key == pg.K_UP and not self.jump:
                     self.jump = True
                     self.gravity = False
+
+                if event.key == pg.K_ESCAPE:
+                    sys.exit()
 
         if key[pg.K_RIGHT]:
             self.x += self.dir_x * 2
