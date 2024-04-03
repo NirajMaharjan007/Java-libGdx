@@ -4,6 +4,7 @@
     },
     "python.analysis.typeCheckingMode": "basic",
     "cSpell.words": [
+        "colliderect",
         "pygame",
         "vsync"
     ],
