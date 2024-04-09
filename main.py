@@ -1,3 +1,5 @@
+import sys
+
 import pygame as pg
 
 from misc.collision import Collision
@@ -9,6 +11,7 @@ pg.init()
 pg.display.set_caption("Python Game")
 
 player = Player(screen)
+box = Box(screen)
 pillar = Pillar(screen)
 collision = Collision(pillar, player)
 
@@ -18,10 +21,13 @@ def set():
     clock.tick(60)
     screen.fill((255, 255, 255))
 
+    Collision.entity_touch(box, player)
+
     if collision.collide():
         collision.player_touch()
 
     pillar.render()
+    box.render()
     player.render()
 
     pg.display.flip()
@@ -40,6 +46,7 @@ def main():
         set()
 
     pg.quit()
+    sys.exit(0)
 
 
 if __name__ == "__main__":
