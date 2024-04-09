@@ -86,14 +86,9 @@ class Player(Entity):
         key = pg.key.get_pressed()
         self.gravity = True
 
-        for event in pg.event.get():
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_UP and not self.jump:
-                    self.jump = True
-                    self.gravity = False
-
-                if event.key == pg.K_ESCAPE:
-                    sys.exit()
+        if key[pg.K_UP] and not self.jump:
+            self.jump = True
+            self.gravity = False
 
         if key[pg.K_RIGHT]:
             self.x += self.dir_x * 2

@@ -1,3 +1,5 @@
+import sys
+
 import pygame as pg
 
 from misc.collision import Collision
@@ -36,10 +38,10 @@ def main():
             if event.type == pg.QUIT:
                 print("quit")
                 run = False
+                pg.quit()
+                sys.exit()
 
         set()
-
-    pg.quit()
 
 
 if __name__ == "__main__":
