@@ -42,7 +42,8 @@ class Pillar(Entity):
     def render(self):
         super().render()
         pg.draw.rect(
-            self.screen, self.color, pg.Rect(self.x, self.y, self.width, self.height)
+            self.screen, self.color, pg.Rect(
+                self.x, self.y, self.width, self.height)
         )
 
 
@@ -63,7 +64,8 @@ class Player(Entity):
         self.__collision()
 
         pg.draw.rect(
-            self.screen, self.color, pg.Rect(self.x, self.y, self.width, self.height)
+            self.screen, self.color, pg.Rect(
+                self.x, self.y, self.width, self.height)
         )
 
     def __collision(self):
@@ -100,7 +102,7 @@ class Player(Entity):
             self.gravity = False
             self.jump = True """
 
-        print(self.count, self.jump)
+        # print(self.count, self.jump)
         if self.jump:
             self.count += 0.50
             self.y -= self.dir_y * 4.20
@@ -133,7 +135,8 @@ class Box(Entity):
         # self.__collision()
         self.__move()
         pg.draw.rect(
-            self.screen, self.color, pg.Rect(self.x, self.y, self.width, self.height)
+            self.screen, self.color, pg.Rect(
+                self.x, self.y, self.width, self.height)
         )
 
     def __move(self):
