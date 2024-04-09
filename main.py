@@ -1,12 +1,15 @@
 import sys
-
 import pygame as pg
+
+from pygame.locals import *  # type: ignore
+
+from OpenGL.GL import *  # type: ignore
 
 from misc.collision import Collision
 from misc.entity import *
 
 WIDTH, HEIGHT = 800, 600
-screen = pg.display.set_mode((WIDTH, HEIGHT), vsync=1)
+screen = pg.display.set_mode((WIDTH, HEIGHT), vsync=1, DOUBLEBUF | OPENGL)
 pg.init()
 pg.display.set_caption("Python Game")
 
@@ -29,6 +32,8 @@ def set():
     pillar.render()
     box.render()
     player.render()
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     pg.display.flip()
     pg.display.update()
