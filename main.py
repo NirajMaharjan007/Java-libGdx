@@ -9,7 +9,7 @@ from misc.collision import Collision
 from misc.entity import *
 
 WIDTH, HEIGHT = 800, 600
-screen = pg.display.set_mode((WIDTH, HEIGHT), vsync=1, DOUBLEBUF | OPENGL)
+screen = pg.display.set_mode((WIDTH, HEIGHT), vsync=1)
 pg.init()
 pg.display.set_caption("Python Game")
 
@@ -33,7 +33,7 @@ def set():
     box.render()
     player.render()
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    # glClear(GL_COLOR_BUFFER_BIT)
 
     pg.display.flip()
     pg.display.update()
