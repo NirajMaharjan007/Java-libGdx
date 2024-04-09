@@ -9,8 +9,8 @@ class Entity(ABC):
     y = 32
     dir_x = 4
     dir_y = 8
-    width = 16
-    height = 16
+    width = 32
+    height = 32
 
     gravity = True
 
@@ -52,7 +52,7 @@ class Player(Entity):
     def __init__(self, screen: pg.Surface):
         super().__init__(screen)
         self.screen = screen
-        self.width = self.height = 32
+        # self.width = self.height = 32
 
         self.jump = False
         self.count = 0.00
@@ -119,19 +119,21 @@ class Box(Entity):
         Entity (_type_): _description_
         (っ◞‸◟ c)
     """
-    x = y = 8
-    SIZE = 32
-    dir_x, dir_y = 6, 6
+
+    dir_x, dir_y = 4, 4
+    x, y = 128, 530
+
     color = (128, 0, 200)
 
     def __init__(self, screen: pg.Surface):
+        super().__init__(screen)
         self.screen = screen
 
     def render(self):
         # self.__collision()
         self.__move()
         pg.draw.rect(
-            self.screen, self.color, pg.Rect(self.x, self.y, self.SIZE, self.SIZE)
+            self.screen, self.color, pg.Rect(self.x, self.y, self.width, self.height)
         )
 
     def __move(self):
@@ -139,13 +141,10 @@ class Box(Entity):
         height = self.screen.get_height()
 
         self.x += self.dir_x
-        self.y += self.dir_y
+        # self.y += self.dir_y
 
-        if self.x >= width - self.SIZE or self.x <= 0:
+        if self.x >= width - self.width or self.x <= 0:
             self.dir_x = -self.dir_x
-
-        if self.y >= height - self.SIZE or self.y <= 0:
-            self.dir_y = -self.dir_y
 
     # def follow(self, player: Player):
     # if self.x == player.x and self.y == player.y:
