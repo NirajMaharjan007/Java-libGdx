@@ -1,4 +1,3 @@
-import sys
 from abc import ABC, abstractmethod
 
 import pygame as pg
