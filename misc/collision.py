@@ -19,7 +19,7 @@ class Collision:
 
         # if (box_rect.x < player_rect.x+player_rect.width
         #         and box_rect.x+box_rect.width > player_rect.x):
-        #     box.dir_x = -box.dir_x
+            # box.dir_x = 0
 
     def collide(self) -> bool:
         box_rect = pg.Rect(self.box.x, self.box.y,

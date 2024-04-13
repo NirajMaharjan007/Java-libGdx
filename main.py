@@ -1,9 +1,8 @@
 import sys
+
 import pygame as pg
-
-from pygame.locals import *  # type: ignore
-
 from OpenGL.GL import *  # type: ignore
+from pygame.locals import *  # type: ignore
 
 from misc.collision import Collision
 from misc.entity import *
