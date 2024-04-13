@@ -1,71 +1,55 @@
-import pygame
-import sys
+import pygame as pg
+from pygame.locals import *  # type: ignore
 
-# Initialize Pygame
-pygame.init()
+from OpenGL.GL import *  # type: ignore
+from OpenGL.GLU import *  # type: ignore
 
-# Set up the display
-width, height = 400, 400
-screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Follow on Collision (All Axes)")
+cubeVertices = ((1, 1, 1), (1, 1, -1), (1, -1, -1), (1, -1, 1),
+                (-1, 1, 1), (-1, -1, -1), (-1, -1, 1), (-1, 1, -1))
+cubeEdges = ((0, 1), (0, 3), (0, 4), (1, 2), (1, 7), (2, 5),
+             (2, 3), (3, 6), (4, 6), (4, 7), (5, 6), (5, 7))
+cubeQuads = ((0, 3, 6, 4), (2, 5, 6, 3), (1, 2, 5, 7),
+             (1, 0, 4, 7), (7, 4, 6, 5), (2, 3, 0, 1))
 
-# Colors
-white = (255, 255, 255)
-red = (255, 0, 0)
 
-# Rectangle properties
-rect1_width, rect1_height = 30, 30
-rect2_width, rect2_height = 30, 30
+def wireCube():
+    glBegin(GL_LINES)
+    for cubeEdge in cubeEdges:
+        for cubeVertex in cubeEdge:
+            glVertex3fv(cubeVertices[cubeVertex])
+    glEnd()
 
-# Initial positions
-rect1_x, rect1_y = 50, 50
-rect2_x, rect2_y = 200, 200
 
-# Initial velocities
-rect1_dx, rect1_dy = 2, 2
-rect2_dx, rect2_dy = 1, 1
+def solidCube():
+    glBegin(GL_QUADS)
+    for cubeQuad in cubeQuads:
+        for cubeVertex in cubeQuad:
+            glVertex3fv(cubeVertices[cubeVertex])
+    glEnd()
 
-# Clock for controlling the frame rate
-clock = pygame.time.Clock()
 
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+def main():
+    pg.init()
+    display = (1680, 1050)
+    pg.display.set_mode(display, DOUBLEBUF | OPENGL)
 
-    # Clear the screen
-    screen.fill(white)
+    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
 
-    # Update rect1's position
-    rect1_x += rect1_dx
-    rect1_y += rect1_dy
+    glTranslatef(0.0, 0.0, -5)
 
-    # Update rect2's position
-    rect2_x += rect2_dx
-    rect2_y += rect2_dy
+    while True:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                quit()
 
-    # Check for collisions
-    rect1_rect = pygame.Rect(rect1_x, rect1_y, rect1_width, rect1_height)
-    rect2_rect = pygame.Rect(rect2_x, rect2_y, rect2_width, rect2_height)
+        glRotatef(1, 1, 1, 1)
+        glClear(GL_DEPTH_BUFFER_BIT)
+        solidCube()
+        # wireCube()
+        pg.display.flip()
+        pg.time.wait(10)
 
-    if rect1_rect.colliderect(rect2_rect):
-        # Rectangles are colliding, adjust their velocities to follow each other
-        rect1_dx, rect1_dy = (rect2_x - rect1_x) / 10, (rect2_y - rect1_y) / 10
-        rect2_dx, rect2_dy = -rect1_dx, -rect1_dy
 
-    # Draw rect1 (red)
-    pygame.draw.rect(screen, red, (rect1_x, rect1_y,
-                     rect1_width, rect1_height))
-
-    # Draw rect2 (green)
-    pygame.draw.rect(screen, (0, 255, 0),
-                     (rect2_x, rect2_y, rect2_width, rect2_height))
-
-    pygame.display.flip()
-
-    # Control the frame rate
-    clock.tick(60)
-
-pygame.quit()
-sys.exit()
+if __name__ == "__main__":
+    main()
